@@ -1,0 +1,21 @@
+{
+  "name": "babel-plugin-import-redirect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Velenir <velenir@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "resolve": "^1.3.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-jest": "^19.0.0",
+    "babel-plugin-dynamic-import-node": "^1.0.1",
+    "babel-preset-es2015": "^6.24.1",
+    "jest": "^19.0.2"
+  }
+}
