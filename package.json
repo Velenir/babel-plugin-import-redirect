@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --config='./__tests__/config.json'",
     "lint": "eslint . --ext .js --ext .jsx --ignore-path .gitignore --cache"
   },
   "author": "Velenir <velenir@gmail.com>",
