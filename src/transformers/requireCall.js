@@ -1,6 +1,6 @@
 import replacePath from "../helpers/replacePath";
 
-export default function (t, path, state) {
+export default function (t, path, state, regexps) {
 	if(path.node.callee.name === "require") {
 		// console.log(__dirname, __filename);
 		console.log(state.file.opts.filename);
@@ -11,7 +11,7 @@ export default function (t, path, state) {
 		
 		const argPath = path.get("arguments.0");
 		if(argPath.isStringLiteral()) {
-			replacePath(t, state, argPath);
+			replacePath(t, argPath, state, regexps);
 		}
 	}
 }

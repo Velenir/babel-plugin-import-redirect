@@ -1,6 +1,8 @@
 import requireCall from './transformers/requireCall';
 import importDeclaration from './transformers/importDeclaration';
 
+const defaultExtensions = [".js", ".jsx", ".es", "es6"];
+
 export default ({types: t}) => {
 	return {
 		pre(state) {
@@ -13,20 +15,22 @@ export default ({types: t}) => {
 			const opts = this.opts;
 			if(!opts.root) opts.root = process.cwd();
 			
+			if(!opts.extensions) opts.extensions = defaultExtensions;
+			
 			const regexps = [], {redirect} = opts;
 			for(let pattern in redirect) {
 				regexps.push([new RegExp(pattern), redirect[pattern]]);
 			}
 			
-			opts.regexps = regexps;
+			this.regexps = regexps;
 		},
 		visitor: {
 			CallExpression(path, state) {
 				// console.log(state.opts === this.opts);
-				requireCall(t, path, state);
+				requireCall(t, path, state, this.regexps);
 			},
 			ImportDeclaration(path, state) {
-				importDeclaration(t, path, state);
+				importDeclaration(t, path, state, this.regexps);
 			}
 		}
 	};

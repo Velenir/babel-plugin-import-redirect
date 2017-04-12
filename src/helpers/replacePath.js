@@ -2,8 +2,8 @@ import resolve from "../helpers/resolveFilename";
 import match from "../helpers/matchRedirect";
 import {relative, dirname} from "path";
 
-export default function (t, {opts: {regexps, root}, file: {opts: {filename}}}, originalPath) {
-	const requiredFilename = resolve(filename, originalPath.node.value);
+export default function (t, originalPath, {opts: {root, extensions}, file: {opts: {filename}}}, regexps) {
+	const requiredFilename = resolve(filename, originalPath.node.value, extensions);
 	console.log("requiredFilename:", requiredFilename);
 	
 	// console.log("Options:", {regexps, root});
