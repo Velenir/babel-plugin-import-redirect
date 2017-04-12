@@ -10,4 +10,14 @@ describe('import', () => {
 		
 		return compareTranspiled("examples/import/relative.js", options);
 	});
+	
+	test('should change relative path dynamically', () => {
+		const options = {
+			redirect: {
+				"/examples(?:/\\w+)*/(\\w+)\\.js$" : "./examples/import/different/$1"
+			}
+		};
+		
+		return compareTranspiled("examples/import/relative.js", options);
+	});
 });

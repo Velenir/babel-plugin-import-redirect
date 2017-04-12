@@ -10,4 +10,14 @@ describe('require', () => {
 		
 		return compareTranspiled("examples/require/relative.js", options);
 	});
+	
+	test('should change relative path dynamically', () => {
+		const options = {
+			redirect: {
+				"/examples(?:/\\w+)*/(\\w+)\\.js$" : "./examples/require/different/$1"
+			}
+		};
+		
+		return compareTranspiled("examples/require/relative.js", options);
+	});
 });
