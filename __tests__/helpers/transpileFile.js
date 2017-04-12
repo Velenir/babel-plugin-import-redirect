@@ -6,6 +6,7 @@ export default function (filename, options = {}) {
 	// console.log("DIRNAME", __dirname);
 	return new Promise((resolve, reject) => {
 		transformFile(filename, {
+			babelrc: false,
 			plugins: [
 				[importRedirect, options]
 			]

@@ -8,6 +8,7 @@ export default function (filename, options = {}) {
 			if(err) reject(err);
 			
 			const out = transform(data, {
+				babelrc: false,
 				plugins: [
 					[importRedirect, options]
 				]
