@@ -1,4 +1,5 @@
 import requireCall from './transformers/requireCall';
+import importDeclaration from './transformers/importDeclaration';
 
 export default ({types: t}) => {
 	return {
@@ -16,6 +17,9 @@ export default ({types: t}) => {
 			CallExpression(path, state) {
 				// console.log(state.opts === this.opts);
 				requireCall(t, path, state);
+			},
+			ImportDeclaration(path, state) {
+				importDeclaration(t, path, state);
 			}
 		}
 	};
