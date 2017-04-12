@@ -2,12 +2,12 @@ import resolve from "../helpers/resolveFilename";
 import match from "../helpers/matchRedirect";
 import {relative, dirname} from "path";
 
-export default function (t, {opts: {redirect, root}, file: {opts: {filename}}}, originalPath) {
+export default function (t, {opts: {regexps, root}, file: {opts: {filename}}}, originalPath) {
 	const requiredFilename = resolve(filename, originalPath.node.value);
 	console.log("requiredFilename:", requiredFilename);
 	
-	// console.log("Options:", {redirect, root});
-	const redirected = match(requiredFilename, redirect, root);
+	// console.log("Options:", {regexps, root});
+	const redirected = match(requiredFilename, regexps, root);
 	console.log("CALCULATED REDIRECT:", redirected);
 	// args[0] = t.stringLiteral("PPAth");
 	
