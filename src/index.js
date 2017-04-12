@@ -1,5 +1,5 @@
 import requireCall from './transformers/requireCall';
-import importDeclaration from './transformers/importDeclaration';
+import importExportDeclaration from './transformers/importExportDeclaration';
 
 const defaultExtensions = [".js", ".jsx", ".es", "es6"];
 
@@ -29,8 +29,8 @@ export default ({types: t}) => {
 				// console.log(state.opts === this.opts);
 				requireCall(t, path, state, this.regexps);
 			},
-			ImportDeclaration(path, state) {
-				importDeclaration(t, path, state, this.regexps);
+			ModuleDeclaration(path, state) {
+				importExportDeclaration(t, path, state, this.regexps);
 			}
 		}
 	};
