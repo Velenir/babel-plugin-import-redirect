@@ -1,13 +1,13 @@
-import {transpileFile} from "./helpers";
-import {resolve} from "path";
-
-function transpile(file) {
-	return transpileFile(resolve(__dirname, file));
-}
+import {compareTranspiled} from "./helpers";
 
 describe('require', () => {
-	test('should change path', () => {
+	test('should change relative path', () => {
+		const options = {
+			redirect: {
+				"/examples(/\\w+)*/lib\\.js$" : "./examples/require/different/lib"
+			}
+		};
 		
-		return transpile("../examples/index.js").then(out => console.log(out));
+		return compareTranspiled("examples/require/relative.js", options);
 	});
 });
