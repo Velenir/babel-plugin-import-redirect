@@ -1,0 +1,1 @@
+module.exports = "FROM DIFFERENT LIB.JS";
