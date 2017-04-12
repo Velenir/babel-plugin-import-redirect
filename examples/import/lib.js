@@ -1,1 +1,1 @@
-export default () => "FROM LIB.JS";
+module.exports = "FROM LIB.JS";
