@@ -30,4 +30,14 @@ describe('import', () => {
 		
 		return compareTranspiled("examples/import/module.js", options);
 	});
+	
+	test('should dynamically change path from a node module to relative', () => {
+		const options = {
+			redirect: {
+				"node_module/(\\w+)\\.js$" : "./examples/import/different/$1"
+			}
+		};
+		
+		return compareTranspiled("examples/import/moduleRelative.js", options);
+	});
 });
