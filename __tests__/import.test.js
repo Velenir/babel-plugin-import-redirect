@@ -20,4 +20,14 @@ describe('import', () => {
 		
 		return compareTranspiled("examples/import/relative.js", options);
 	});
+	
+	test('should change path from a node module to relative', () => {
+		const options = {
+			redirect: {
+				"node_module" : "./examples/import/different/lib.js"
+			}
+		};
+		
+		return compareTranspiled("examples/import/module.js", options);
+	});
 });
