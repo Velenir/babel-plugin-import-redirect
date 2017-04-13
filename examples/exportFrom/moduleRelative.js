@@ -1,0 +1,1 @@
+export { default as lib } from "node_module/lib";
