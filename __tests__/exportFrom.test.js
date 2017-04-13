@@ -30,6 +30,16 @@ describe('export from', () => {
 		
 		return compareTranspiled("examples/exportFrom/module.js", options);
 	});
+	
+	test('should dynamically change path from a node module to relative', () => {
+		const options = {
+			redirect: {
+				"node_module/(\\w+)\\.js$" : "./examples/exportFrom/different/$1"
+			}
+		};
+		
+		return compareTranspiled("examples/exportFrom/moduleRelative.js", options);
+	});
 });
 
 describe('export', () => {
