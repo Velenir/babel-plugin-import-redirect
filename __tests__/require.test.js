@@ -20,4 +20,14 @@ describe('require', () => {
 		
 		return compareTranspiled("examples/require/relative.js", options);
 	});
+	
+	test('should change path from a node module to relative', () => {
+		const options = {
+			redirect: {
+				"node_module" : "./examples/require/different/lib.js"
+			}
+		};
+		
+		return compareTranspiled("examples/require/module.js", options);
+	});
 });
