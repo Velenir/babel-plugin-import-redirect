@@ -30,4 +30,14 @@ describe('require', () => {
 		
 		return compareTranspiled("examples/require/module.js", options);
 	});
+	
+	test('should dynamically change path from a node module to relative', () => {
+		const options = {
+			redirect: {
+				"node_module/(\\w+)\\.js$" : "./examples/require/different/$1"
+			}
+		};
+		
+		return compareTranspiled("examples/require/moduleRelative.js", options);
+	});
 });
