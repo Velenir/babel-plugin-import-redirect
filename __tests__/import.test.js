@@ -40,4 +40,15 @@ describe('import', () => {
 		
 		return compareTranspiled("examples/import/moduleRelative.js", options);
 	});
+	
+	test('should change path from a node module to a different node module', () => {
+		const options = {
+			redirect: {
+				"node_module" : "different_node_module"
+			},
+			root: "./examples"
+		};
+		
+		return compareTranspiled("examples/import/module2module.js", options);
+	});
 });
