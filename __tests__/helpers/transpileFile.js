@@ -11,7 +11,7 @@ export default function (filename, options = {}) {
 				[importRedirect, options]
 			]
 		}, function (err, out) {
-			if(err) reject(err);
+			if(err) return reject(err);
 			
 			// TODO: reject when out is undefined
 			resolve(out.code);
