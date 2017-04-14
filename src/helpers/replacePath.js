@@ -1,6 +1,6 @@
 import resolveNode from "../helpers/resolveNode";
 import match from "../helpers/matchRedirect";
-import {relative, dirname} from "path";
+import {relative, dirname, extname} from "path";
 
 export default function (t, originalPath, {opts: {root, extensions}, file: {opts: {filename}}}, regexps) {
 	const requiredFilename = resolveNode(dirname(filename), originalPath.node.value, extensions);
@@ -26,6 +26,11 @@ export default function (t, originalPath, {opts: {root, extensions}, file: {opts
 		}
 		let relativeRedirect = relative(dirname(filename), redirected);
 		if(!relativeRedirect.startsWith(".")) relativeRedirect = "./" + relativeRedirect;
+		
+		if(!extname(redirect)) {
+			const ext = extname(relativeRedirect);
+			if(ext) relativeRedirect = relativeRedirect.slice(0, -ext.length);
+		}
 		
 		originalPath.replaceWith(t.stringLiteral(relativeRedirect));
 	}
