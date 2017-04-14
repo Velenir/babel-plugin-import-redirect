@@ -7,7 +7,10 @@ export default function (t, originalPath, {opts: {root, extensions}, file: {opts
 	console.log("requiredFilename:", requiredFilename);
 	
 	// console.log("Options:", {regexps, root});
-	const {redirect, redirected} = match(requiredFilename, regexps, root, extensions);
+	const matched = match(requiredFilename, regexps, root, extensions);
+	if(matched === null) return;
+	
+	const {redirect, redirected} = matched;
 	console.log("CALCULATED REDIRECT:", redirected);
 	// args[0] = t.stringLiteral("PPAth");
 	
