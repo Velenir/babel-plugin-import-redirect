@@ -63,7 +63,7 @@ describe('require', () => {
 		return compareTranspiled("examples/require/module2moduleRelative.js", options);
 	});
 	
-	test('should dynamically change path from relative to a node module', () => {
+	test('should change path from relative to a node module', () => {
 		const options = {
 			redirect: {
 				"/examples(/\\w+)*/lib\\.js$" : "node_module"
@@ -72,5 +72,16 @@ describe('require', () => {
 		};
 		
 		return compareTranspiled("examples/require/relative2module.js", options);
+	});
+	
+	test('should dynamically change path from relative to a node module', () => {
+		const options = {
+			redirect: {
+				"/examples(?:/\\w+)*/(\\w+)\\.js$" : "node_module/$1"
+			},
+			root: "./examples"
+		};
+		
+		return compareTranspiled("examples/require/relative2moduleDyn.js", options);
 	});
 });
