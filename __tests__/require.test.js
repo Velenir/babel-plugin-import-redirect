@@ -62,4 +62,15 @@ describe('require', () => {
 		
 		return compareTranspiled("examples/require/module2moduleRelative.js", options);
 	});
+	
+	test('should dynamically change path from relative to a node module', () => {
+		const options = {
+			redirect: {
+				"/examples(/\\w+)*/lib\\.js$" : "node_module"
+			},
+			root: "./examples"
+		};
+		
+		return compareTranspiled("examples/require/relative2module.js", options);
+	});
 });
