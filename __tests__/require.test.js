@@ -84,4 +84,14 @@ describe('require', () => {
 		
 		return compareTranspiled("examples/require/relative2moduleDyn.js", options);
 	});
+	
+	test.only('should not change when no matching redirect is found', () => {
+		const options = {
+			redirect: {
+				"path/wont/match$" : "./examples/require/different/lib"
+			}
+		};
+		
+		return compareTranspiled("examples/require/noMatch.js", options);
+	});
 });
