@@ -40,4 +40,15 @@ describe('require', () => {
 		
 		return compareTranspiled("examples/require/moduleRelative.js", options);
 	});
+	
+	test.only('should change path from a node module to a different node module', () => {
+		const options = {
+			redirect: {
+				"node_module" : "different_node_module"
+			},
+			root: "./examples"
+		};
+		
+		return compareTranspiled("examples/require/module2module.js", options);
+	});
 });
