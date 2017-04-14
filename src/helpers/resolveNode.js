@@ -1,11 +1,9 @@
 import resolve from "resolve";
-import {dirname} from "path";
 
 const cache = {};
 
-export default function (fromFile, filename, extensions) {
-	const dir = dirname(fromFile);
-	const cached = cache[dir];
+export default function (basedir, filename, extensions) {
+	const cached = cache[basedir];
 	
 	if(cached) {
 		const withFilename = cached[filename];
@@ -24,16 +22,15 @@ export default function (fromFile, filename, extensions) {
 	}
 	
 	const resolved = getResolved();
-	cache[dir] = {
+	cache[basedir] = {
 		[filename]: new Map().set(extensions, resolved)
 	};
 	
 	return resolved;
 	
-	
 	function getResolved(){
 		return resolve.sync(filename, {
-			basedir: dir,
+			basedir,
 			extensions
 		});
 	}

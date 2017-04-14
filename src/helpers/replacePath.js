@@ -1,13 +1,13 @@
-import resolve from "../helpers/resolveFilename";
+import resolveNode from "../helpers/resolveNode";
 import match from "../helpers/matchRedirect";
 import {relative, dirname} from "path";
 
 export default function (t, originalPath, {opts: {root, extensions}, file: {opts: {filename}}}, regexps) {
-	const requiredFilename = resolve(filename, originalPath.node.value, extensions);
+	const requiredFilename = resolveNode(dirname(filename), originalPath.node.value, extensions);
 	console.log("requiredFilename:", requiredFilename);
 	
 	// console.log("Options:", {regexps, root});
-	const redirected = match(requiredFilename, regexps, root);
+	const {redirect, redirected} = match(requiredFilename, regexps, root, extensions);
 	console.log("CALCULATED REDIRECT:", redirected);
 	// args[0] = t.stringLiteral("PPAth");
 	
@@ -16,6 +16,17 @@ export default function (t, originalPath, {opts: {root, extensions}, file: {opts
 		// console.log("from:", dirname(filename));
 		// console.log("rel:", relative(dirname(filename), redirected));
 		// args[0] = t.stringLiteral(redirected);
-		originalPath.replaceWith(t.stringLiteral("./" + relative(dirname(filename), redirected)));
+		if(redirected.includes("/node_modules/")) {
+			if(resolveNode(dirname(filename), redirect, extensions)) {
+				console.log("FINAL -- MODULE", redirect);
+				originalPath.replaceWith(t.stringLiteral(redirect));
+				return;
+			}
+			
+		}
+		let relativeRedirect = relative(dirname(filename), redirected);
+		if(!relativeRedirect.startsWith(".")) relativeRedirect = "./" + relativeRedirect;
+		
+		originalPath.replaceWith(t.stringLiteral(relativeRedirect));
 	}
 }
