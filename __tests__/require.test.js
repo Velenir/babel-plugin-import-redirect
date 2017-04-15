@@ -85,7 +85,7 @@ describe('require', () => {
 		return compareTranspiled("examples/require/relative2moduleDyn.js", options);
 	});
 	
-	test.only('should not change when no matching redirect is found', () => {
+	test('should not change when no matching redirect is found', () => {
 		const options = {
 			redirect: {
 				"path/wont/match$" : "./examples/require/different/lib"
@@ -93,5 +93,49 @@ describe('require', () => {
 		};
 		
 		return compareTranspiled("examples/require/noMatch.js", options);
+	});
+	
+	describe('should change even when', () => {
+		test('file at original relative path doesn\'t exist', () => {
+			const options = {
+				redirect: {
+					"/examples(/\\w+)*/not_exist_lib\\.js$" : "./examples/require/different/lib"
+				}
+			};
+			
+			return compareTranspiled("examples/require/relativeNotExist.js", options);
+		});
+		
+		test('file at the final path doesn\'t exist', () => {
+			const options = {
+				redirect: {
+					"/examples(/\\w+)*/lib\\.js$" : "./examples/require/different/not_exist_lib"
+				}
+			};
+			
+			return compareTranspiled("examples/require/relativeDestNotExist.js", options);
+		});
+		
+		test('node at original path doesn\'t exist', () => {
+			const options = {
+				redirect: {
+					"not_exist_node_module" : "different_node_module"
+				},
+				root: "./examples"
+			};
+			
+			return compareTranspiled("examples/require/moduleNotExist.js", options);
+		});
+		
+		test('node at the final path doesn\'t exist', () => {
+			const options = {
+				redirect: {
+					"node_module" : "not_exist_node_module"
+				},
+				root: "./examples"
+			};
+			
+			return compareTranspiled("examples/require/moduleDestNotExist.js", options);
+		});
 	});
 });
