@@ -1,0 +1,11 @@
+{
+  "plugins": [[
+		"import-redirect",
+		{
+			"redirect": {
+				"/examples(?:/\\w+)*/(\\w+)\\.js$" : "node_module/$1"
+			},
+			"root": "./examples"
+		}
+	]]
+}

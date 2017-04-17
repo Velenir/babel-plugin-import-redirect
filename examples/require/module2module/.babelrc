@@ -1,0 +1,11 @@
+{
+  "plugins": [[
+		"import-redirect",
+		{
+			"redirect": {
+				"node_module" : "different_node_module"
+			},
+			"root": "./examples"
+		}
+	]]
+}

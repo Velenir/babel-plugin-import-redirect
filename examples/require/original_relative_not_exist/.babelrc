@@ -1,0 +1,10 @@
+{
+  "plugins": [[
+		"import-redirect",
+		{
+			"redirect": {
+				"/examples(/\\w+)*/not_exist_lib\\.js$" : "./examples/different/lib"
+			}
+		}
+	]]
+}
