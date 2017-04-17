@@ -1,0 +1,10 @@
+{
+  "plugins": [[
+		"import-redirect",
+		{
+			"redirect": {
+				"node_module" : "./examples/different/lib.js"
+			}
+		}
+	]]
+}
