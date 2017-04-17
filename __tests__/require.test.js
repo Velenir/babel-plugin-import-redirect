@@ -18,7 +18,7 @@ const tests = {
 	}
 };
 
-const declarations = ["require", "import"];
+const declarations = ["require", "import", "export"];
 
 function runTestsFor(tests, decl) {
 	function describeTests(tests) {
