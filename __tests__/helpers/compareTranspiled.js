@@ -1,15 +1,15 @@
-import {resolve, parse, join} from "path";
+import {resolve} from "path";
 import transpileFile from "./transpileFile";
 import transpileCode from "./transpileCode";
 import readFile from "./readFile";
 
-export default function (file, options, codeOnly = false) {
-	const absFile = resolve(process.cwd(), file);
-	const {dir, name, ext} = parse(absFile);
-	const absFileTranspiled = join(dir, name + "_transpiled" + ext);
+export default function (dir, codeOnly = false) {
+	const file = dir + "/index.js", cwd = process.cwd();
+	const absFile = resolve(cwd, file);
+	const absFileTranspiled = resolve(cwd, dir + "/transpiled.js");
 	
 	return Promise.all([
-		(codeOnly ? transpileCode : transpileFile)(absFile, options),
+		(codeOnly ? transpileCode : transpileFile)(absFile),
 		readFile(absFileTranspiled)
 	]).then(([codeIn, codeOut]) => expect(codeIn).toBe(codeOut));
 }
