@@ -1,1 +1,0 @@
-export { lib } from "./different/lib.js";

@@ -1,1 +1,0 @@
-export { default as lib } from "./different/lib";
