@@ -1,0 +1,11 @@
+{
+  "plugins": [[
+		"import-redirect",
+		{
+			"extraFunctions": "custom_require_function",
+			"redirect": {
+				"/examples(/\\w+)*/lib\\.js$" : "./examples/different/not_exist_lib"
+			}
+		}
+	]]
+}
