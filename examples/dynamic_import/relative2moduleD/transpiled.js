@@ -1,0 +1,1 @@
+import("node_module/lib").then(module => module.default);

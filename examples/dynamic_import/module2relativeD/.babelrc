@@ -1,0 +1,10 @@
+{
+  "plugins": ["syntax-dynamic-import", [
+		"import-redirect",
+		{
+			"redirect": {
+				"node_module/(\\w+)\\.js$" : "./examples/different/$1"
+			}
+		}
+	]]
+}

@@ -1,0 +1,1 @@
+import("not_exist_node_module").then(module => module.default);

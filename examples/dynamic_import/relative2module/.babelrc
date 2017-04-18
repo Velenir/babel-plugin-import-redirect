@@ -1,0 +1,11 @@
+{
+  "plugins": ["syntax-dynamic-import", [
+		"import-redirect",
+		{
+			"redirect": {
+				"/examples(/\\w+)*/lib\\.js$" : "node_module"
+			},
+			"root": "./examples"
+		}
+	]]
+}

@@ -1,0 +1,11 @@
+{
+  "plugins": ["syntax-dynamic-import", [
+		"import-redirect",
+		{
+			"redirect": {
+				"not_exist_node_module" : "different_node_module"
+			},
+			"root": "./examples"
+		}
+	]]
+}

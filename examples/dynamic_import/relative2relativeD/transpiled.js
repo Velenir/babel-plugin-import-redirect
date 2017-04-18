@@ -1,0 +1,1 @@
+import("../../different/lib").then(module => module.default);
