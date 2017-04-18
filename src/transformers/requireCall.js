@@ -1,7 +1,9 @@
 import replacePath from "../helpers/replacePath";
 
-export default function (t, path, state, regexps) {
-	if(path.node.callee.name === "require") {
+export default function (t, path, state, {regexps, functionNames}) {
+	console.log("CHECKING", path.node.callee.name);
+	console.log("IN", functionNames);
+	if(functionNames.has(path.node.callee.name)) {
 		// console.log(__dirname, __filename);
 		console.log(state.file.opts.filename);
 		console.log(state.file.opts.basename);

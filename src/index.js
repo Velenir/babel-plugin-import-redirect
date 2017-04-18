@@ -22,15 +22,22 @@ export default ({types: t}) => {
 				regexps.push([new RegExp(pattern), redirect[pattern]]);
 			}
 			
-			this.regexps = regexps;
+			const {extraFunctions} = this.opts;
+						
+			const functionNames = new Set(extraFunctions && (Array.isArray(extraFunctions) ? extraFunctions : [extraFunctions])).add("require");
+			
+			this.calculatedOpts = {
+				regexps,
+				functionNames
+			};
 		},
 		visitor: {
 			CallExpression(path, state) {
 				// console.log(state.opts === this.opts);
-				requireCall(t, path, state, this.regexps);
+				requireCall(t, path, state, this.calculatedOpts);
 			},
 			ModuleDeclaration(path, state) {
-				importExportDeclaration(t, path, state, this.regexps);
+				importExportDeclaration(t, path, state, this.calculatedOpts);
 			}
 		}
 	};
