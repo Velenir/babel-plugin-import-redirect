@@ -15,3 +15,9 @@ describe('for paths with corresponding redirect of false', () => {
 		return compareTranspiled("examples/misc/dont_remove_import");
 	});
 });
+
+describe('for paths with corresponding redirect of object', () => {
+	test('should replace require statements with the corresponding objects', () => {
+		return compareTranspiled("examples/misc/replace_require");
+	});
+});
