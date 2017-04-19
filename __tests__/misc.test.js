@@ -10,4 +10,8 @@ describe('for paths with corresponding redirect of false', () => {
 	test('should remove imports without side effects', () => {
 		return compareTranspiled("examples/misc/remove_import");
 	});
+	
+	test('should not remove imports with side effects and exports', () => {
+		return compareTranspiled("examples/misc/dont_remove_import");
+	});
 });
