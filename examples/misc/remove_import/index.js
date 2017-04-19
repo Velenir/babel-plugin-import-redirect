@@ -1,5 +1,6 @@
-/*eslint-disable no-undef*/
+/*eslint-disable no-undef, import/no-duplicates*/
 import "./style.css";
+import {} from "./style.css";
 
 require("./style.css");
 
