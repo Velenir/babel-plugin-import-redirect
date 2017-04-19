@@ -1,0 +1,11 @@
+{
+  "plugins": [[
+		"import-redirect",
+		{
+			"extraFunctions": "SystemJS.import",
+			"redirect": {
+				"path/wont/match$" : "./examples/require/different/lib"
+			}
+		}
+	]]
+}

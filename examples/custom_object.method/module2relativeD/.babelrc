@@ -1,0 +1,11 @@
+{
+  "plugins": [[
+		"import-redirect",
+		{
+			"extraFunctions": "SystemJS.import",
+			"redirect": {
+				"node_module/(\\w+)\\.js$" : "./examples/different/$1"
+			}
+		}
+	]]
+}

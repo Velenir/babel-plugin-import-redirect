@@ -1,0 +1,12 @@
+{
+  "plugins": [[
+		"import-redirect",
+		{
+			"extraFunctions": "SystemJS.import",
+			"redirect": {
+				"not_exist_node_module" : "different_node_module"
+			},
+			"root": "./examples"
+		}
+	]]
+}
