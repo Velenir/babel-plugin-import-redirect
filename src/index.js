@@ -1,5 +1,6 @@
 import requireCall from './transformers/requireCall';
 import importExportDeclaration from './transformers/importExportDeclaration';
+import {parseExpression} from "babylon";
 
 const defaultExtensions = [".js", ".jsx", ".es", "es6"];
 
@@ -17,7 +18,7 @@ export default ({types: t}) => {
 			
 			if(!opts.extensions) opts.extensions = defaultExtensions;
 			
-			const regexps = [], toRemove = [], {redirect} = opts;
+			const regexps = [], toRemove = [], toReplace = [], {redirect} = opts;
 			for(let pattern in redirect) {
 				const regexp = new RegExp(pattern), redirected = redirect[pattern];
 				
@@ -25,6 +26,8 @@ export default ({types: t}) => {
 					toRemove.push(regexp);
 				}else if(typeof redirected === "string") {
 					regexps.push([regexp, redirected]);
+				} else {
+					toReplace.push([regexp, parseExpression(JSON.stringify(redirected))]);
 				}
 			}
 			
@@ -35,7 +38,8 @@ export default ({types: t}) => {
 			this.calculatedOpts = {
 				regexps,
 				functionNames,
-				toRemove
+				toRemove,
+				toReplace
 			};
 		},
 		visitor: {

@@ -2,7 +2,7 @@ import resolveNode from "./resolveNode";
 import match from "./matchRedirect";
 import {relative, dirname, extname} from "path";
 
-export default function (t, originalPath, {opts: {root, extensions}, file: {opts: {filename}}}, regexps, toRemove, pathToRemove) {
+export default function (t, originalPath, {opts: {root, extensions}, file: {opts: {filename}}}, regexps, toRemove, pathToRemove, toReplace, pathToReplace) {
 	const requiredFilename = resolveNode(dirname(filename), originalPath.node.value, extensions);
 	console.log("requiredFilename:", requiredFilename);
 	
@@ -38,5 +38,16 @@ export default function (t, originalPath, {opts: {root, extensions}, file: {opts
 		}
 	} else if(pathToRemove && toRemove.some(regexp => regexp.test(requiredFilename))) {
 		pathToRemove.remove();
+	} else if(pathToReplace) {
+		const replacement = toReplace.find(([regexp]) => regexp.test(requiredFilename));
+		
+		if(replacement) {
+			let obj = replacement[1];
+			if(pathToReplace.parentPath.isMemberExpression({object: pathToReplace.node})) {
+				obj = t.parenthesizedExpression(obj);
+			}
+			
+			pathToReplace.replaceWith(obj);
+		}
 	}
 }

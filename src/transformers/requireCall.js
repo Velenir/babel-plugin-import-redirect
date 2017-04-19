@@ -6,7 +6,7 @@ const membToString = (t, {object, property, computed}) => {
 	return object.name + "." + (propIsIdentifier ? property.name : property.value);
 };
 
-export default function (t, path, state, {regexps, functionNames, toRemove}) {
+export default function (t, path, state, {regexps, functionNames, toRemove, toReplace}) {
 	console.log("CHECKING", path.node.callee.name);
 	console.log("IN", functionNames);
 	const {callee} = path.node;
@@ -20,7 +20,7 @@ export default function (t, path, state, {regexps, functionNames, toRemove}) {
 		
 		const argPath = path.get("arguments.0");
 		if(argPath.isStringLiteral()) {
-			replacePath(t, argPath, state, regexps, toRemove, path.parentPath.isExpressionStatement() && path.parentPath);
+			replacePath(t, argPath, state, regexps, toRemove, path.parentPath.isExpressionStatement() && path.parentPath, toReplace, path);
 		}
 	}
 }
