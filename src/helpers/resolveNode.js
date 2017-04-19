@@ -1,30 +1,22 @@
 import resolve from "resolve";
 import path from "path";
 
-const cache = {};
+let cache = {};
 
 export default function (basedir, filename, extensions) {
+	if(cache.extensions !== extensions) {
+		cache = {};
+		cache.extensions = extensions;
+	}
 	const cached = cache[basedir];
 	
 	if(cached) {
-		const withFilename = cached[filename];
-		if(withFilename) {
-			let resolved = withFilename.get(extensions);
-			if(resolved !== undefined) return resolved;
-			
-			resolved = getResolved();
-			withFilename.set(extensions, resolved);
-			return resolved;
-		}
-		
-		const resolved = getResolved();
-		cached[filename] = new Map().set(extensions, resolved);
-		return resolved;
+		return cached[filename] || (cached[filename] = getResolved());
 	}
 	
 	const resolved = getResolved();
 	cache[basedir] = {
-		[filename]: new Map().set(extensions, resolved)
+		[filename]: resolved
 	};
 	
 	return resolved;
