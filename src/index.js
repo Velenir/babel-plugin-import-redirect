@@ -17,9 +17,15 @@ export default ({types: t}) => {
 			
 			if(!opts.extensions) opts.extensions = defaultExtensions;
 			
-			const regexps = [], {redirect} = opts;
+			const regexps = [], toRemove = [], {redirect} = opts;
 			for(let pattern in redirect) {
-				regexps.push([new RegExp(pattern), redirect[pattern]]);
+				const regexp = new RegExp(pattern), redirected = redirect[pattern];
+				
+				if(redirected === false) {
+					toRemove.push(regexp);
+				}else if(typeof redirected === "string") {
+					regexps.push([regexp, redirected]);
+				}
 			}
 			
 			const {extraFunctions} = this.opts;
@@ -28,7 +34,8 @@ export default ({types: t}) => {
 			
 			this.calculatedOpts = {
 				regexps,
-				functionNames
+				functionNames,
+				toRemove
 			};
 		},
 		visitor: {
