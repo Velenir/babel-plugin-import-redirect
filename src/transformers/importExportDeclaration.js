@@ -1,16 +1,18 @@
 import replacePath from "../helpers/replacePath";
 
-export default function (t, path, state, {toMatch, toRemove}) {
-	const pathToMatch = path.get("source");
+export default function (t, path, state, {toMatch, toRemove, toReplace}) {
+	const pathIsImportDeclaration = path.isImportDeclaration();
+	const pathToMatch = path.get("source"),
+		pathToRemove = pathIsImportDeclaration && !path.node.specifiers.length && path,
+		pathToReplace = pathIsImportDeclaration && path.node.specifiers.length && path;
+	
 	if(pathToMatch.node) {
 		replacePath(t, {
 			pathToMatch,
-			pathToRemove: path.isImportDeclaration() && !path.node.specifiers.length && path,
+			pathToRemove,
 			// TODO replacement functionality
-			pathToReplace: null,
-			toMatch,
-			toRemove,
-			toReplace: null
+			pathToReplace,
+			toMatch, toRemove, toReplace
 		}, state);
 	}
 }

@@ -26,12 +26,12 @@ export default function (t, path, state, {toMatch, functionNames, toRemove, toRe
 		console.log(state.file.opts.basename);
 		console.log(state.file.opts.filenameRelative);
 		
-		const pathToMatch = path.get("arguments.0");
+		const pathToMatch = path.get("arguments.0"), pathToRemove = path.parentPath.isExpressionStatement() && path.parentPath;
 		if(pathToMatch.isStringLiteral()) {
 			replacePath(t, {
 				pathToMatch,
-				pathToRemove: path.parentPath.isExpressionStatement() && path.parentPath,
-				pathToReplace: path,
+				pathToRemove,
+				pathToReplace: !pathToRemove && path,
 				toMatch, toRemove, toReplace,
 				replaceFn: replaceRequire
 			}, state);
