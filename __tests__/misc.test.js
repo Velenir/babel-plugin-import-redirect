@@ -20,4 +20,9 @@ describe('for paths with corresponding redirect of object', () => {
 	test('should replace require statements with the corresponding objects', () => {
 		return compareTranspiled("examples/misc/replace_require");
 	});
+	
+	test('should remove imports without side effects', () => {
+		return compareTranspiled("examples/misc/dont_replace_import_but_remove");
+	});
+	// TODO: replace import ... from with an object per property when needed
 });
