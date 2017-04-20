@@ -18,14 +18,14 @@ export default ({types: t}) => {
 			
 			if(!opts.extensions) opts.extensions = defaultExtensions;
 			
-			const regexps = [], toRemove = [], toReplace = [], {redirect} = opts;
-			for(let pattern in redirect) {
+			const toMatch = [], toRemove = [], toReplace = [], {redirect} = opts;
+			for(let pattern of Object.keys(redirect)) {
 				const regexp = new RegExp(pattern), redirected = redirect[pattern];
 				
 				if(redirected === false) {
 					toRemove.push(regexp);
 				}else if(typeof redirected === "string") {
-					regexps.push([regexp, redirected]);
+					toMatch.push([regexp, redirected]);
 				} else {
 					toReplace.push([regexp, parseExpression(JSON.stringify(redirected))]);
 				}
@@ -36,7 +36,7 @@ export default ({types: t}) => {
 			const functionNames = new Set(extraFunctions && (Array.isArray(extraFunctions) ? extraFunctions : [extraFunctions])).add("require");
 			
 			this.calculatedOpts = {
-				regexps,
+				toMatch,
 				functionNames,
 				toRemove,
 				toReplace

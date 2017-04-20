@@ -6,7 +6,15 @@ const membToString = (t, {object, property, computed}) => {
 	return object.name + "." + (propIsIdentifier ? property.name : property.value);
 };
 
-export default function (t, path, state, {regexps, functionNames, toRemove, toReplace}) {
+const replaceRequire = (t, replacementObj, pathToReplace) => {
+	if(pathToReplace.parentPath.isMemberExpression({object: pathToReplace.node})) {
+		replacementObj = t.parenthesizedExpression(replacementObj);
+	}
+	
+	pathToReplace.replaceWith(replacementObj);
+};
+
+export default function (t, path, state, {toMatch, functionNames, toRemove, toReplace}) {
 	console.log("CHECKING", path.node.callee.name);
 	console.log("IN", functionNames);
 	const {callee} = path.node;
@@ -18,9 +26,15 @@ export default function (t, path, state, {regexps, functionNames, toRemove, toRe
 		console.log(state.file.opts.basename);
 		console.log(state.file.opts.filenameRelative);
 		
-		const argPath = path.get("arguments.0");
-		if(argPath.isStringLiteral()) {
-			replacePath(t, argPath, state, regexps, toRemove, path.parentPath.isExpressionStatement() && path.parentPath, toReplace, path);
+		const pathToMatch = path.get("arguments.0");
+		if(pathToMatch.isStringLiteral()) {
+			replacePath(t, {
+				pathToMatch,
+				pathToRemove: path.parentPath.isExpressionStatement() && path.parentPath,
+				pathToReplace: path,
+				toMatch, toRemove, toReplace,
+				replaceFn: replaceRequire
+			}, state);
 		}
 	}
 }
