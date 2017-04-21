@@ -24,5 +24,8 @@ describe('for paths with corresponding redirect of object', () => {
 	test('should remove imports without side effects', () => {
 		return compareTranspiled("examples/misc/dont_replace_import_but_remove");
 	});
-	// TODO: replace import ... from with an object per property when needed
+	
+	test('should replace named imports with the corresponding object\'s properties', () => {
+		return compareTranspiled("examples/misc/replace_import");
+	});
 });
