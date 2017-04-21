@@ -1,10 +1,10 @@
 import resolve from "resolve";
 import path from "path";
 
-let cache = {};
+let cache;
 
 export default function (basedir, filename, extensions) {
-	if(cache.extensions !== extensions) {
+	if(!cache || cache.extensions !== extensions) {
 		cache = {};
 		cache.extensions = extensions;
 	}
