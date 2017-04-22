@@ -30,7 +30,7 @@ describe('for paths with corresponding redirect of object', () => {
 	});
 });
 
-describe('when code is provided not from a file', () => {
+describe('when code is provided directly (not from a file)', () => {
 	test('assume filename to be <root>/index.js when resolving path', () => {
 		const input = `
 			import lib from "./lib";
@@ -56,6 +56,34 @@ require("./different/lib");
 import("./different/lib").then(module => module.default);
 custom_require_function("./different/lib");
 SystemJS.import("./different/lib");`;
+		
+		expect(transpileCode(input, options)).toBe(output);
+	});
+	
+	test('assume filename to be <cwd>/index.js (if no root provided) when resolving path', () => {
+		const input = `
+			import lib from "./examples/lib";
+			export { default as lib } from "./examples/lib";
+			require("./examples/lib");
+			import("./examples/lib").then(module => module.default);
+			custom_require_function("./examples/lib");
+			SystemJS.import("./examples/lib");
+		`;
+		
+		const options = {
+			extraFunctions: ["custom_require_function", "SystemJS.import"],
+			redirect: {
+				"/examples(/\\w+)*/lib\\.js$" : "./examples/different/lib"
+			}
+		};
+		
+		const output = `
+import lib from "./examples/different/lib";
+export { default as lib } from "./examples/different/lib";
+require("./examples/different/lib");
+import("./examples/different/lib").then(module => module.default);
+custom_require_function("./examples/different/lib");
+SystemJS.import("./examples/different/lib");`;
 		
 		expect(transpileCode(input, options)).toBe(output);
 	});
