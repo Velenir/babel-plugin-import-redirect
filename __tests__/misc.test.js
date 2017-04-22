@@ -1,4 +1,4 @@
-import {compareTranspiled} from "./helpers";
+import {compareTranspiled, transpileCode} from "./helpers";
 
 describe('simple export', () => {
 	test('should not be changed', () => {
@@ -29,3 +29,35 @@ describe('for paths with corresponding redirect of object', () => {
 		return compareTranspiled("examples/misc/replace_import");
 	});
 });
+
+describe('when code is provided not from a file', () => {
+	test('assume filename to be <root>/index.js when resolving path', () => {
+		const input = `
+			import lib from "./lib";
+			export { default as lib } from "./lib";
+			require("./lib");
+			import("./lib").then(module => module.default);
+			custom_require_function("./lib");
+			SystemJS.import("./lib");
+		`;
+		
+		const options = {
+			extraFunctions: ["custom_require_function", "SystemJS.import"],
+			redirect: {
+				"/examples(/\\w+)*/lib\\.js$" : "./different/lib"
+			},
+			root: "./examples"
+		};
+		
+		const output = `
+import lib from "./different/lib";
+export { default as lib } from "./different/lib";
+require("./different/lib");
+import("./different/lib").then(module => module.default);
+custom_require_function("./different/lib");
+SystemJS.import("./different/lib");`;
+		
+		expect(transpileCode(input, options)).toBe(output);
+	});
+});
+
