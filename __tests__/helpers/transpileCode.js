@@ -1,20 +1,13 @@
-import fs from "fs";
 import {transform} from "babel-core";
 import importRedirect from "../../src";
+import dynamicImport from "babel-plugin-syntax-dynamic-import";
 
-export default function (filename, options = {}) {
-	return new Promise((resolve, reject) => {
-		fs.readFile(filename, "utf8", function (err, data) {
-			if(err) return reject(err);
-			
-			const out = transform(data, {
-				babelrc: false,
-				plugins: [
-					[importRedirect, options]
-				]
-			});
-			
-			resolve(out.code);
-		});
-	});
+export default function (code, options = {}) {
+	return transform(code, {
+		babelrc: false,
+		plugins: [
+			dynamicImport,
+			[importRedirect, options]
+		]
+	}).code;
 }
