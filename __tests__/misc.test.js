@@ -1,7 +1,7 @@
 import {compareTranspiled} from "./helpers";
 
 describe('simple export', () => {
-	test('should not change path', () => {
+	test('should not be changed', () => {
 		return compareTranspiled("examples/misc/export_noop");
 	});
 });
