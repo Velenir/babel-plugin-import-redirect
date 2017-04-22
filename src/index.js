@@ -1,6 +1,7 @@
 import requireCall from './transformers/requireCall';
 import importExportDeclaration from './transformers/importExportDeclaration';
 import {parseExpression} from "babylon";
+import {resolve} from "path";
 
 const defaultExtensions = [".js", ".jsx", ".es", "es6"];
 
@@ -9,12 +10,14 @@ export default ({types: t}) => {
 		pre(state) {
 			console.log("PRE");
 			// console.log(Object.keys(state));
-			console.log("filename", state.opts.filename);
-			console.log("filenameRelative", state.opts.filenameRelative);
+			console.log("filename", state.opts.filename, typeof state.opts.filename);
+			console.log("filenameRelative", state.opts.filenameRelative, typeof state.opts.filenameRelative);
 			// console.log(this.opts);
 			// console.log(state.opts === this.opts);
 			const opts = this.opts;
 			if(!opts.root) opts.root = process.cwd();
+			
+			if(state.opts.filename === "unknown") state.opts.filename = resolve(opts.root, "index.js");
 			
 			if(!opts.extensions) opts.extensions = defaultExtensions;
 			
