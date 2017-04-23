@@ -28,7 +28,6 @@ export default function runTestsFor(decl) {
 				});
 			} else {
 				test(description, () => {
-					console.log(description);
 					return compareTranspiled(dir.replace("<dir>", decl));
 				});
 			}

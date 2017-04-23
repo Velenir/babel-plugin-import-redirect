@@ -8,12 +8,6 @@ const defaultExtensions = [".js", ".jsx", ".es", "es6"];
 export default ({types: t}) => {
 	return {
 		pre(state) {
-			console.log("PRE");
-			// console.log(Object.keys(state));
-			console.log("filename", state.opts.filename, typeof state.opts.filename);
-			console.log("filenameRelative", state.opts.filenameRelative, typeof state.opts.filenameRelative);
-			// console.log(this.opts);
-			// console.log(state.opts === this.opts);
 			const opts = this.opts;
 			if(!opts.root) opts.root = process.cwd();
 			
@@ -48,7 +42,6 @@ export default ({types: t}) => {
 		},
 		visitor: {
 			CallExpression(path, state) {
-				// console.log(state.opts === this.opts);
 				requireCall(t, path, state, this.calculatedOpts);
 			},
 			ModuleDeclaration(path, state) {
