@@ -34,7 +34,7 @@ const replaceImport = (t, replacementObj, pathToReplace) => {
 	pathToReplace.replaceWith(variableDeclaration);
 };
 
-export default function (t, path, state, {toMatch, toRemove, toReplace}) {
+export default function (t, path, state, {toMatch, toRemove, toReplace, filename}) {
 	const pathIsImportDeclaration = path.isImportDeclaration();
 	const pathToMatch = path.get("source"),
 		pathToRemove = pathIsImportDeclaration && !path.node.specifiers.length && path,
@@ -46,7 +46,8 @@ export default function (t, path, state, {toMatch, toRemove, toReplace}) {
 			pathToRemove,
 			pathToReplace,
 			toMatch, toRemove, toReplace,
-			replaceFn: replaceImport
+			replaceFn: replaceImport,
+			filename
 		}, state);
 	}
 }

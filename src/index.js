@@ -17,7 +17,7 @@ export default ({types: t}) => {
 			const opts = this.opts;
 			if(!opts.root) opts.root = process.cwd();
 			
-			if(state.opts.filename === "unknown") state.opts.filename = resolve(opts.root, "index.js");
+			const filename = state.opts.filename === "unknown" ? resolve(opts.root, "index.js") : state.opts.filename;
 			
 			if(!opts.extensions) opts.extensions = defaultExtensions;
 			
@@ -39,6 +39,7 @@ export default ({types: t}) => {
 			const functionNames = new Set(extraFunctions && (Array.isArray(extraFunctions) ? extraFunctions : [extraFunctions])).add("require");
 			
 			this.calculatedOpts = {
+				filename,
 				toMatch,
 				functionNames,
 				toRemove,

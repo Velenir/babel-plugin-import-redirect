@@ -2,11 +2,11 @@ import resolveNode from "./resolveNode";
 import match from "./matchRedirect";
 import {relative, dirname, extname} from "path";
 
-export default function (t, {pathToMatch, pathToRemove, pathToReplace, toMatch, toRemove, toReplace, replaceFn}, {opts: {root, extensions}, file: {opts: {filename}}}) {
+export default function (t, {pathToMatch, pathToRemove, pathToReplace, toMatch, toRemove, toReplace, replaceFn, filename}, {opts: {root, extensions}}) {
 	const requiredFilename = resolveNode(dirname(filename), pathToMatch.node.value, extensions);
 	console.log("requiredFilename:", requiredFilename);
-	console.log("pathToRemove", !!pathToRemove);
-	console.log("pathToReplace", !!pathToReplace);
+	// console.log("pathToRemove", !!pathToRemove);
+	// console.log("pathToReplace", !!pathToReplace);
 	// console.log("Options:", {toMatch, root});
 	const matched = match(requiredFilename, toMatch, root, extensions);
 	if(matched !== null) {
@@ -34,16 +34,18 @@ export default function (t, {pathToMatch, pathToRemove, pathToReplace, toMatch, 
 				const ext = extname(relativeRedirect);
 				if(ext) relativeRedirect = relativeRedirect.slice(0, -ext.length);
 			}
-			
+			console.log("FINAL -- RELATIVE", relativeRedirect);
 			pathToMatch.replaceWith(t.stringLiteral(relativeRedirect));
 		}
-	// can be removed
+	// if can be removed
 	} else if(pathToRemove) {
 		if(toRemove.some(regexp => regexp.test(requiredFilename)) || toReplace.find(([regexp]) => regexp.test(requiredFilename))) pathToRemove.remove();
-	// can be replaced
+		console.log("REMOVED", requiredFilename);
+	// if can be replaced
 	} else if(pathToReplace) {
 		const replacement = toReplace.find(([regexp]) => regexp.test(requiredFilename));
 		
 		if(replacement) replaceFn(t, replacement[1], pathToReplace);
+		console.log("REPLACED", requiredFilename);
 	}
 }
