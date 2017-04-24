@@ -14,8 +14,8 @@ const replaceRequire = (t, replacementObj, pathToReplace) => {
 	pathToReplace.replaceWith(replacementObj);
 };
 
-export default function (t, path, state, {toMatch, functionNames, toRemove, toReplace, filename}) {
-	const {callee} = path.node;
+export default function (t, path, state, calculatedOpts) {
+	const {callee} = path.node, {functionNames} = calculatedOpts;
 	if((t.isIdentifier(callee) && functionNames.has(callee.name)) ||
 		t.isImport(callee) ||
 		(t.isMemberExpression(callee) && functionNames.has(membToString(t, callee)))
@@ -27,10 +27,8 @@ export default function (t, path, state, {toMatch, functionNames, toRemove, toRe
 				pathToMatch,
 				pathToRemove,
 				pathToReplace: !pathToRemove && path,
-				toMatch, toRemove, toReplace,
 				replaceFn: replaceRequire,
-				filename
-			}, state);
+			}, calculatedOpts, state);
 		}
 	}
 }
