@@ -7,8 +7,23 @@ const membToString = (t, {object, property, computed}) => {
 };
 
 const replaceRequire = (t, replacementObj, pathToReplace) => {
-	if(pathToReplace.parentPath.isMemberExpression({object: pathToReplace.node})) {
-		replacementObj = t.parenthesizedExpression(replacementObj);
+	const {node} = pathToReplace;
+	if(pathToReplace.parentPath.isMemberExpression({object: node})) {
+		let handled = false;
+		if(t.isImport(node.callee)) {
+			const {property, computed} = pathToReplace.parent;
+			const propIsIdentifier = t.isIdentifier(property);
+			if(!(computed && propIsIdentifier)) {
+				const propName = propIsIdentifier ? property.name : property.value;
+				if(propName === "then" || propName === "catch") {
+					const promise = t.memberExpression(t.identifier("Promise"),t.identifier("resolve"));
+					replacementObj = t.callExpression(promise, [replacementObj]);
+					handled = true;
+				}
+			}
+		}
+		
+		if(!handled) replacementObj = t.parenthesizedExpression(replacementObj);
 	}
 	
 	pathToReplace.replaceWith(replacementObj);
