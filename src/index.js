@@ -11,7 +11,11 @@ export default ({types: t}) => {
 			const opts = this.opts;
 			if(!opts.root) opts.root = process.cwd();
 			
-			const filename = state.opts.filename === "unknown" ? resolve(opts.root, "index.js") : state.opts.filename;
+			const filenameUnknown = state.opts.filename === "unknown";
+			const filename = filenameUnknown ? resolve(opts.root, "index.js") : state.opts.filename;
+			if(filenameUnknown) {
+				console.warn("Source input isn't a file. Paths will be resolved relative to", opts.root);
+			}
 			
 			if(!opts.extensions) opts.extensions = defaultExtensions;
 			
