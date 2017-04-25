@@ -2,8 +2,7 @@
 const styles1 = require("./style.css");
 const s1 = require("./style.css").s1;
 
-const styles2 = import("./style.css");
-const s2 = import("./style.css").s2;
+import("./style.css").then(() => {});
 
 const styles3 = custom_require_function("./style.css");
 const s3 = custom_require_function("./style.css").s3;
