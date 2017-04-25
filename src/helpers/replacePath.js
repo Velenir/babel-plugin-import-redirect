@@ -12,12 +12,12 @@ export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn
 		// path has a corresponing redirect
 		if(redirected !== null) {
 			if(redirected.includes("/node_modules/")) {
-				if(resolveNode(dirname(filename), redirect, extensions)) {
-					pathToMatch.replaceWith(t.stringLiteral(redirect));
-					return;
-				}
-				
+				// resolveNode here only generates a warning when necessary
+				resolveNode(dirname(filename), redirect, extensions);
+				pathToMatch.replaceWith(t.stringLiteral(redirect));
+				return;
 			}
+			
 			let relativeRedirect = relative(dirname(filename), redirected);
 			if(!relativeRedirect.startsWith(".")) relativeRedirect = "./" + relativeRedirect;
 			
