@@ -1,2 +1,3 @@
-// eslint-disable-next-line no-undef
+/*eslint-disable no-undef*/
 SystemJS.import("../../lib.js");
+SystemJS["import"]("../../lib.js");
