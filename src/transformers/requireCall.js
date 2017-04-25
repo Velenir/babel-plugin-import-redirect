@@ -18,7 +18,8 @@ export default function (t, path, state, calculatedOpts) {
 	const {callee} = path.node, {functionNames} = calculatedOpts;
 	if((t.isIdentifier(callee) && functionNames.has(callee.name)) ||
 		t.isImport(callee) ||
-		(t.isMemberExpression(callee) && functionNames.has(membToString(t, callee)))
+		// don't check further if there is only "require" in functionNames
+		(functionNames.size > 1 && t.isMemberExpression(callee) && functionNames.has(membToString(t, callee)))
 	) {
 		
 		const pathToMatch = path.get("arguments.0"), pathToRemove = path.parentPath.isExpressionStatement() && path.parentPath;
