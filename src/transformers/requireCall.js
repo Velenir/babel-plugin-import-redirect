@@ -6,13 +6,13 @@ const membToString = (t, {object, property, computed}) => {
 	return object.name + "." + (propIsIdentifier ? property.name : property.value);
 };
 
-const replaceRequire = (t, replacementObj, pathToReplace, wrapObjectInPromise) => {
+const replaceRequire = (t, replacementObj, pathToReplace, wrapReplacementInPromise) => {
 	const {node, node: {callee}} = pathToReplace;
 	
 	if(t.isImport(callee) ||
-	wrapObjectInPromise.has(callee.name) ||
-	// don't check further if there nothing in wrapObjectInPromise
-	(wrapObjectInPromise.size > 0 && t.isMemberExpression(callee) && wrapObjectInPromise.has(membToString(t, callee)))) {
+	wrapReplacementInPromise.has(callee.name) ||
+	// don't check further if there nothing in wrapReplacementInPromise
+	(wrapReplacementInPromise.size > 0 && t.isMemberExpression(callee) && wrapReplacementInPromise.has(membToString(t, callee)))) {
 		const promise = t.memberExpression(t.identifier("Promise"),t.identifier("resolve"));
 		replacementObj = t.callExpression(promise, [replacementObj]);
 	} else if(pathToReplace.parentPath.isMemberExpression({object: node})) {

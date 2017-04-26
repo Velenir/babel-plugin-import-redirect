@@ -3,7 +3,7 @@
 		"import-redirect",
 		{
 			"extraFunctions": ["custom_require_function", "Object.method", "SystemJS.import"],
-			"promisifyObjectFor": "SystemJS.import",
+			"promisifyReplacementFor": "SystemJS.import",
 			"redirect": {
 				"\\.css$" : {"class1": "className1", "class2": "className2"}
 			}

@@ -32,16 +32,16 @@ export default ({types: t}) => {
 				}
 			}
 			
-			const {extraFunctions, promisifyObjectFor} = this.opts;
+			const {extraFunctions, promisifyReplacementFor} = this.opts;
 						
 			const functionNames = new Set(extraFunctions && (Array.isArray(extraFunctions) ? extraFunctions : [extraFunctions])).add("require");
-			const wrapObjectInPromise = new Set(promisifyObjectFor && (Array.isArray(promisifyObjectFor) ? promisifyObjectFor: [promisifyObjectFor]));
+			const wrapReplacementInPromise = new Set(promisifyReplacementFor && (Array.isArray(promisifyReplacementFor) ? promisifyReplacementFor: [promisifyReplacementFor]));
 			
 			this.calculatedOpts = {
 				filename,
 				toMatch,
 				functionNames,
-				wrapObjectInPromise,
+				wrapReplacementInPromise,
 				toRemove,
 				toReplace
 			};
