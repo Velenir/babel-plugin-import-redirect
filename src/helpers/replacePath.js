@@ -2,7 +2,7 @@ import resolveNode from "./resolveNode";
 import match from "./matchRedirect";
 import {relative, dirname, extname} from "path";
 
-export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn}, {toMatch, toRemove, toReplace, filename}, {opts: {root, extensions}}) {
+export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn}, {toMatch, toRemove, toReplace, filename, wrapObjectInPromise}, {opts: {root, extensions}}) {
 	const requiredFilename = resolveNode(dirname(filename), pathToMatch.node.value, extensions);
 	const matched = match(requiredFilename, toMatch, root, extensions);
 	
@@ -38,7 +38,7 @@ export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn
 		const replacement = toReplace.find(([regexp]) => regexp.test(requiredFilename));
 		
 		if(replacement) {
-			replaceFn(t, replacement[1], pathToReplace);
+			replaceFn(t, replacement[1], pathToReplace, wrapObjectInPromise);
 		}
 	}
 }
