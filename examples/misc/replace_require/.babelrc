@@ -2,7 +2,8 @@
   "plugins": ["syntax-dynamic-import", [
 		"import-redirect",
 		{
-			"extraFunctions": ["custom_require_function", "Object.method"],
+			"extraFunctions": ["custom_require_function", "Object.method", "SystemJS.import"],
+			"promisifyObjectFor": "SystemJS.import",
 			"redirect": {
 				"\\.css$" : {"class1": "className1", "class2": "className2"}
 			}

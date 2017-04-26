@@ -4,6 +4,8 @@ const s1 = require("./style.css").s1;
 
 import("./style.css").then(() => {});
 
+SystemJS.import("./style.css").then(() => {});
+
 const styles3 = custom_require_function("./style.css");
 const s3 = custom_require_function("./style.css").s3;
 
