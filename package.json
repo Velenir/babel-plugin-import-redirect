@@ -5,30 +5,32 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --config='./__tests__/config.json'",
-    "lint": "eslint . --ext .js --ext .jsx --ignore-path .gitignore --cache"
+    "lint": "eslint . --ext .js --ext .jsx --ignore-path .gitignore --cache",
+    "build": "babel src --out-dir lib"
   },
   "author": "Velenir <velenir@gmail.com>",
   "license": "MIT",
-	"keywords": [
+  "keywords": [
     "babel",
     "babel-plugin",
     "import",
     "redirect",
     "require",
-		"export",
+    "export",
     "path",
     "rewrite",
     "resolve",
-		"replace",
+    "replace",
     "rename",
     "mock",
     "module"
-	],
+  ],
   "dependencies": {
     "babylon": "^6.16.1",
     "resolve": "^1.3.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.1",
     "babel-jest": "^19.0.0",
