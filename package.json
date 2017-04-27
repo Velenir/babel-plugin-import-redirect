@@ -9,6 +9,21 @@
   },
   "author": "Velenir <velenir@gmail.com>",
   "license": "MIT",
+	"keywords": [
+    "babel",
+    "babel-plugin",
+    "import",
+    "redirect",
+    "require",
+		"export",
+    "path",
+    "rewrite",
+    "resolve",
+		"replace",
+    "rename",
+    "mock",
+    "module"
+	],
   "dependencies": {
     "babylon": "^6.16.1",
     "resolve": "^1.3.2"
