@@ -1,7 +1,7 @@
 {
   "name": "babel-plugin-import-redirect",
   "version": "1.0.0",
-  "description": "",
+  "description": "Import, export, require path redirect plugin for Babel",
   "main": "index.js",
   "scripts": {
     "test": "jest --config='./__tests__/config.json'",
