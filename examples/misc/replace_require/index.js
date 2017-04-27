@@ -1,6 +1,7 @@
 /*eslint-disable no-undef, no-unused-vars*/
 const styles1 = require("./style.css");
 const s1 = require("./style.css").s1;
+fn(require("./style.css"));
 
 import("./style.css").then(() => {});
 
