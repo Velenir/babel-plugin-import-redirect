@@ -2,7 +2,9 @@
   "name": "babel-plugin-import-redirect",
   "version": "1.0.0",
   "description": "Import, export, require path redirect plugin for Babel",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "src/index.js",
+  "files": ["src", "lib"],
   "scripts": {
     "test": "jest --config='./__tests__/config.json'",
     "lint": "eslint . --ext .js --ext .jsx --ignore-path .gitignore --cache",
