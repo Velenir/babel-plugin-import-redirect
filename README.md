@@ -6,7 +6,7 @@ For example, this plugin allows to transform:
 
 ```
 import "./path/to/file";
-export variable from "./path/to/different/file";
+export {variable} from "./path/to/different/file";
 require("module");
 import("different_module");
 ```
@@ -15,7 +15,7 @@ to
 
 ```
 import "./mocks/mockFile";
-export variable from "./mocks/differentMockFile";
+export {variable} from "./mocks/differentMockFile";
 require("./mocks/mockModule");
 import("yet_another_module");
 ```
