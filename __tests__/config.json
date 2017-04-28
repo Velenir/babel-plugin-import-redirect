@@ -1,3 +1,5 @@
 {
-	"testPathIgnorePatterns": ["/node_modules/", "<rootDir>/__tests__/helpers/"]
+	"testPathIgnorePatterns": ["/node_modules/", "<rootDir>/__tests__/helpers/"],
+	"coverageDirectory": "coverage",
+	"collectCoverageFrom": ["src/**/*.js"]
 }

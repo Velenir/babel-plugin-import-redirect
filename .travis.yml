@@ -15,9 +15,11 @@ before_script:
   - npm prune
 script:
   - npm run lint
-  - npm run test
+  - npm run test:coverage
 after_success:
   - npm run semantic-release
+after_script:
+  - bash <(curl -s https://codecov.io/bash)
 branches:
   only:
   - master
