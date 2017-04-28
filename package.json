@@ -12,6 +12,7 @@
     "test": "jest --config='./__tests__/config.json'",
     "lint": "eslint . --ext .js --ext .jsx --ignore-path .gitignore --cache",
     "build": "babel src --out-dir lib",
+    "prepublish": "npm run build",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "author": "Velenir <velenir@gmail.com>",
