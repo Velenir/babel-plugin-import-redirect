@@ -53,7 +53,7 @@ Then add it to your babel configuration (e.g. in *.babelrc*). A rather exhaustiv
 
 > Transforming dynamic **import()** requires that [babel-plugin-syntax-dynamic-import](https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-dynamic-import) be included in `plugins` before `import-redirect`
 
-Now when you transpile your source files, any path inside **import**, **export from** declarations, **require()** and dynamic **import()** calls that matches a *redirect.key* is resolved to point to the files from a corresponding *redirect.value*.
+Now when you transpile your source files, any path inside **import**, **export from** declarations, **require()** and dynamic **import()** calls that matches a *redirect.key* is resolved to point to the file from a corresponding *redirect.value*.
 
 ## Example
 
@@ -185,9 +185,9 @@ E.g. given a project structure of
     lib.js
 ```
 
-`require("./lib");` inside `./src/index.js` file when matched against `"/(\\w+).js": "./mocks/$1"` with no `root` provided will transpile to `require("../mocks/lib")`.
+`require("./lib");` inside `./src/index.js` file when matched against `"/(\\w+).js": "./mocks/$1"` with no `root` provided will transpile to `require("../mocks/lib");`.
 
-+ `false`, which will result in removal of simple `import` declarations, `require()`, `import()` and custom require function calls without side effects. That is functions which are not part of a larger expression:
++ `false`, which will result in removal of simple `import` declarations, `require()`, `import()` and custom require function calls without side effects. That is, functions which are not part of a larger expression:
 
 ```
 // will be removed
