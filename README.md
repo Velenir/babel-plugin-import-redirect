@@ -218,7 +218,7 @@ Additionally **replacement** objects for `import()` calls and calls of custom fu
 E.g. for a `"path/to/file": {"key": val}` **matchPattern-replacement** pair
 
 | will be removed                                          | was removed
-|----------------------------------------------------------|--|
+|:---------------------------------------------------------|:-|
 | `import "path/to/file";`                                 |  |
 | `require("path/to/file");`                               |  |
 | `import("path/to/file");`                                |  |
