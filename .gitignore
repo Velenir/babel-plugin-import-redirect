@@ -47,7 +47,9 @@ dump
 #distribution ready files
 dist
 build
+lib
 .publish
+.lib
 
 #dotenv environment file
 .env
