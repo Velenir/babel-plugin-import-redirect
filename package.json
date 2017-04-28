@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-import-redirect",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Import, export, require path redirect plugin for Babel",
   "main": "lib/index.js",
   "module": "src/index.js",
@@ -11,7 +11,8 @@
   "scripts": {
     "test": "jest --config='./__tests__/config.json'",
     "lint": "eslint . --ext .js --ext .jsx --ignore-path .gitignore --cache",
-    "build": "babel src --out-dir lib"
+    "build": "babel src --out-dir lib",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "author": "Velenir <velenir@gmail.com>",
   "license": "MIT",
@@ -45,14 +46,19 @@
     "eslint": "^3.19.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jest": "^19.0.1",
-    "jest": "^19.0.2"
+    "jest": "^19.0.2",
+    "semantic-release": "^6.3.2"
   },
-	"engines": {
-		"node": ">=4"
-	},
+  "engines": {
+    "node": ">=4"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Velenir/babel-plugin-import-redirect.git"
   }
 }
