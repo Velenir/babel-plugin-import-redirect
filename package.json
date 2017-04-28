@@ -47,6 +47,9 @@
     "eslint-plugin-jest": "^19.0.1",
     "jest": "^19.0.2"
   },
+	"engines": {
+		"node": ">=4"
+	},
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
