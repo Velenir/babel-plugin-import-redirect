@@ -1,7 +1,7 @@
 import requireCall from './transformers/requireCall';
 import importExportDeclaration from './transformers/importExportDeclaration';
 import {parseExpression} from "babylon";
-import {resolve} from "path";
+import {dirname} from "path";
 
 const defaultExtensions = [".js", ".jsx", ".es", "es6"];
 
@@ -12,7 +12,7 @@ export default ({types: t}) => {
 			if(!opts.root) opts.root = process.cwd();
 			
 			const filenameUnknown = state.opts.filename === "unknown";
-			const filename = filenameUnknown ? resolve(opts.root, "index.js") : state.opts.filename;
+			const basedir = filenameUnknown ? opts.root : dirname(state.opts.filename);
 			if(filenameUnknown) {
 				console.warn("Source input isn't a file. Paths will be resolved relative to", opts.root);
 			}
@@ -38,7 +38,7 @@ export default ({types: t}) => {
 			const wrapReplacementInPromise = new Set(promisifyReplacementFor && (Array.isArray(promisifyReplacementFor) ? promisifyReplacementFor: [promisifyReplacementFor]));
 			
 			this.calculatedOpts = {
-				filename,
+				basedir,
 				toMatch,
 				functionNames,
 				wrapReplacementInPromise,

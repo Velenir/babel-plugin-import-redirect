@@ -1,9 +1,9 @@
 import resolveNode from "./resolveNode";
 import match from "./matchRedirect";
-import {relative, dirname, extname} from "path";
+import {relative, extname} from "path";
 
-export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn}, {toMatch, toRemove, toReplace, filename, wrapReplacementInPromise}, {opts: {root, extensions}}) {
-	const requiredFilename = resolveNode(dirname(filename), pathToMatch.node.value, extensions);
+export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn}, {toMatch, toRemove, toReplace, basedir, wrapReplacementInPromise}, {opts: {root, extensions}}) {
+	const requiredFilename = resolveNode(basedir, pathToMatch.node.value, extensions);
 	const matched = match(requiredFilename, toMatch, root, extensions);
 	
 	if(matched !== null) {
@@ -12,9 +12,9 @@ export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn
 		// path has a corresponing redirect
 		if(redirected !== null) {
 			if(redirected.includes("/node_modules/")) {
-				const resolvedFromFile = resolveNode(dirname(filename), redirect, extensions);
+				const resolvedFromFile = resolveNode(basedir, redirect, extensions);
 				
-				// require(redirect) resolves to the same path from filename as require(redirected)
+				// require(redirect) resolves to the same path from file source as require(redirected)
 				if(resolvedFromFile === redirected) {
 					pathToMatch.replaceWith(t.stringLiteral(redirect));
 					return;
@@ -25,14 +25,14 @@ export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn
 						// require(modulePath) resolves to the same file as require(modulePath/file/path)
 						// thanks to package.json
 						if(resolveNode(moduleDir, moduleName, extensions) === redirected) {
-							pathToMatch.replaceWith(t.stringLiteral(relative(dirname(filename), moduleDir)));
+							pathToMatch.replaceWith(t.stringLiteral(relative(basedir, moduleDir)));
 							return;
 						}
 					}
 				}
 			}
 			
-			let relativeRedirect = relative(dirname(filename), redirected);
+			let relativeRedirect = relative(basedir, redirected);
 			if(!/^\.\.?\//.test(relativeRedirect)) relativeRedirect = "./" + relativeRedirect;
 			
 			if(!extname(redirect)) {
