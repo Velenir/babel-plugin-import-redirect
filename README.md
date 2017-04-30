@@ -154,14 +154,16 @@ The transpilation to make it happen will be performed as follows:
   "promisifyReplacementFor": String | Array<String>,
   "redirect": {
     matchPattern: replacement
-  }
+  },
+	"suppressResolveWarning": Boolean
 }
 ```
 
 + `root` : path, relative to which `replacement` paths are resolved. Equals project root folder by default.
 + `extraFunctions` : functions to consider when matching against keys in redirect in addition to **import**, **export from** declarations, **require()** and dynamic **import()**. It can be a simple function name (`"custom_require"`) or an object.property pair (`"SystemJS.import"`).
 + `promisifyReplacementFor` : functions, in addition to `import()`, for which `replacement` Objects should be wrapped in `Promise.resolve()`.
-+ `redirect` : Object with `matchPattern` keys and `replacement` values
++ `redirect` : Object with `matchPattern` keys and `replacement` values.
++ `suppressResolveWarning`: Boolean, `false` by default. During path resolution plugin shows a warning when it can't find a module. It will still do its best to resolve to the right path. This option suppresses that warning.
 
 #### matchPattern
 
