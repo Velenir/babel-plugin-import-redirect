@@ -19,7 +19,7 @@ export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn
 			}
 			
 			let relativeRedirect = relative(dirname(filename), redirected);
-			if(!relativeRedirect.startsWith(".")) relativeRedirect = "./" + relativeRedirect;
+			if(!/^\.\.?\//.test(relativeRedirect)) relativeRedirect = "./" + relativeRedirect;
 			
 			if(!extname(redirect)) {
 				const ext = extname(relativeRedirect);
