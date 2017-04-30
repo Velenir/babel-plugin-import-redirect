@@ -2,11 +2,11 @@ import resolve from "resolve";
 import path from "path";
 
 let cache;
+const ext = Symbol("extensions");
 
 export default function (basedir, filename, extensions) {
-	if(!cache || cache.extensions !== extensions) {
-		cache = {};
-		cache.extensions = extensions;
+	if(!cache || cache[ext] !== extensions) {
+		cache = {[ext]: extensions};
 	}
 	const cached = cache[basedir];
 	
@@ -28,7 +28,7 @@ export default function (basedir, filename, extensions) {
 				extensions
 			});
 		} catch (err) {
-			let errMessage = err.message + "\nMake sure it is available later", resolved;
+			let resolved, errMessage = err.message + "\nMake sure it is available later";
 			if(/^\.\.?\//.test(filename)) {
 				resolved = path.resolve(basedir, filename);
 			} else {
