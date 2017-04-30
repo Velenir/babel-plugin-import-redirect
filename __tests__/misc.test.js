@@ -94,3 +94,25 @@ describe('when redirect points to a node module but require("node_module") in th
 		return compareTranspiled("examples/misc/same_module_different_depth");
 	});
 });
+
+describe('when file or module at the original path doesn\'t exist', () => {
+	const spy = jest.spyOn(console, "warn");
+	
+	afterEach(() => {
+		spy.mockReset();
+	});
+	
+	afterAll(() => {
+		spy.mockRestore();
+	});
+	
+	test('should show a warning', () => {
+		return compareTranspiled("examples/import/original_relative_not_exist")
+			.then(() => expect(spy).toBeCalledWith(expect.stringMatching(/^Cannot find module /)));
+	});
+	
+	test('should not show a warning if suppressResolveWarning is set to true', () => {
+		return compareTranspiled("examples/misc/suppress_resolve_warning")
+			.then(() => expect(spy).not.toBeCalled());
+	});
+});
