@@ -4,7 +4,7 @@ import path from "path";
 let cache;
 const ext = Symbol("extensions");
 
-export default function (basedir, filename, extensions) {
+export default function (basedir, filename, extensions, suppressResolveWarning) {
 	if(!cache || cache[ext] !== extensions) {
 		cache = {[ext]: extensions};
 	}
@@ -36,7 +36,7 @@ export default function (basedir, filename, extensions) {
 				resolved = "/node_modules/" + filename;
 			}
 			
-			console.warn(errMessage);
+			if(!suppressResolveWarning) console.warn(errMessage);
 			return resolved;
 		}
 	}

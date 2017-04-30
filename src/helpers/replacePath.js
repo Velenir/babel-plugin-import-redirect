@@ -2,9 +2,9 @@ import resolveNode from "./resolveNode";
 import match from "./matchRedirect";
 import {relative, extname} from "path";
 
-export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn}, {toMatch, toRemove, toReplace, basedir, wrapReplacementInPromise}, {opts: {root, extensions}}) {
-	const requiredFilename = resolveNode(basedir, pathToMatch.node.value, extensions);
-	const matched = match(requiredFilename, toMatch, root, extensions);
+export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn}, {toMatch, toRemove, toReplace, basedir, wrapReplacementInPromise}, {opts: {root, extensions, suppressResolveWarning}}) {
+	const requiredFilename = resolveNode(basedir, pathToMatch.node.value, extensions, suppressResolveWarning);
+	const matched = match(requiredFilename, toMatch, root, extensions, suppressResolveWarning);
 	
 	if(matched !== null) {
 		const {redirect, redirected} = matched;
@@ -12,7 +12,7 @@ export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn
 		// path has a corresponing redirect
 		if(redirected !== null) {
 			if(redirected.includes("/node_modules/")) {
-				const resolvedFromFile = resolveNode(basedir, redirect, extensions);
+				const resolvedFromFile = resolveNode(basedir, redirect, extensions, suppressResolveWarning);
 				
 				// require(redirect) resolves to the same path from file source as require(redirected)
 				if(resolvedFromFile === redirected) {
@@ -24,7 +24,7 @@ export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn
 						const [moduleDir, moduleName] = modulePath;
 						// require(modulePath) resolves to the same file as require(modulePath/file/path)
 						// thanks to package.json
-						if(resolveNode(moduleDir, moduleName, extensions) === redirected) {
+						if(resolveNode(moduleDir, moduleName, extensions, suppressResolveWarning) === redirected) {
 							pathToMatch.replaceWith(t.stringLiteral(relative(basedir, moduleDir)));
 							return;
 						}

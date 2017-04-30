@@ -1,6 +1,6 @@
 import resolveNode from "./resolveNode";
 
-export default function (filename, regexps, root, extensions) {
+export default function (filename, regexps, root, extensions, suppressResolveWarning) {
 	const redirectPair = regexps.find(([regexp]) => regexp.test(filename));
 	
 	if(redirectPair) {
@@ -15,7 +15,7 @@ export default function (filename, regexps, root, extensions) {
 		}
 		
 		return {
-			redirected: resolveNode(root, redirect, extensions),
+			redirected: resolveNode(root, redirect, extensions, suppressResolveWarning),
 			redirect
 		};
 	}
