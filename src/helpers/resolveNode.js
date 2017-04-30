@@ -29,7 +29,7 @@ export default function (basedir, filename, extensions, suppressResolveWarning) 
 			});
 		} catch (err) {
 			let resolved, errMessage = err.message + "\nMake sure it is available later";
-			if(/^\.\.?\//.test(filename)) {
+			if(filename.startsWith("./") || filename.startsWith("../")) {
 				resolved = path.resolve(basedir, filename);
 			} else {
 				errMessage += " in node_modules";

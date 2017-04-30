@@ -33,7 +33,7 @@ export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn
 			}
 			
 			let relativeRedirect = relative(basedir, redirected);
-			if(!/^\.\.?\//.test(relativeRedirect)) relativeRedirect = "./" + relativeRedirect;
+			if(!(relativeRedirect.startsWith("./") || relativeRedirect.startsWith("../"))) relativeRedirect = "./" + relativeRedirect;
 			
 			if(!extname(redirect)) {
 				const ext = extname(relativeRedirect);
