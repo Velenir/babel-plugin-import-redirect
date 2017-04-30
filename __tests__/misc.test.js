@@ -89,3 +89,8 @@ SystemJS.import("./examples/different/lib");`;
 	});
 });
 
+describe('when redirect points to a node module but require("node_module") in the source file would resolve to a different module by the same name ', () => {
+	test('should replace with a relative path to the original node module', () => {
+		return compareTranspiled("examples/misc/same_module_different_depth");
+	});
+});
