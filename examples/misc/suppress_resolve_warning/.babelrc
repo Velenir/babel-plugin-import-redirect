@@ -1,0 +1,11 @@
+{
+  "plugins": [[
+		"import-redirect",
+		{
+			"suppressResolveWarning": true,
+			"redirect": {
+				"/examples(/\\w+)*/not_exist_lib\\.js$" : "./examples/different/lib"
+			}
+		}
+	]]
+}
