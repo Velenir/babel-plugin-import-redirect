@@ -12,10 +12,24 @@ export default function (t, {pathToMatch, pathToRemove, pathToReplace, replaceFn
 		// path has a corresponing redirect
 		if(redirected !== null) {
 			if(redirected.includes("/node_modules/")) {
-				// resolveNode here only generates a warning when necessary
-				resolveNode(dirname(filename), redirect, extensions);
-				pathToMatch.replaceWith(t.stringLiteral(redirect));
-				return;
+				const resolvedFromFile = resolveNode(dirname(filename), redirect, extensions);
+				
+				// require(redirect) resolves to the same path from filename as require(redirected)
+				if(resolvedFromFile === redirected) {
+					pathToMatch.replaceWith(t.stringLiteral(redirect));
+					return;
+				} else {
+					const modulePath = redirected.match("^.*/node_modules/([^\/]+?)(?=/)");
+					if(modulePath) {
+						const [moduleDir, moduleName] = modulePath;
+						// require(modulePath) resolves to the same file as require(modulePath/file/path)
+						// thanks to package.json
+						if(resolveNode(moduleDir, moduleName, extensions) === redirected) {
+							pathToMatch.replaceWith(t.stringLiteral(relative(dirname(filename), moduleDir)));
+							return;
+						}
+					}
+				}
 			}
 			
 			let relativeRedirect = relative(dirname(filename), redirected);
