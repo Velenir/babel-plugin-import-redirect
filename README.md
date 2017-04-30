@@ -155,7 +155,8 @@ The transpilation to make it happen will be performed as follows:
   "redirect": {
     matchPattern: replacement
   },
-	"suppressResolveWarning": Boolean
+  "extensions": Array<String>,
+  "suppressResolveWarning": Boolean
 }
 ```
 
@@ -163,6 +164,7 @@ The transpilation to make it happen will be performed as follows:
 + `extraFunctions` : functions to consider when matching against keys in redirect in addition to **import**, **export from** declarations, **require()** and dynamic **import()**. It can be a simple function name (`"custom_require"`) or an object.property pair (`"SystemJS.import"`).
 + `promisifyReplacementFor` : functions, in addition to `import()`, for which `replacement` Objects should be wrapped in `Promise.resolve()`.
 + `redirect` : Object with `matchPattern` keys and `replacement` values.
++ `extensions`: Array of extensions to use for resolving filenames. Equals `[".js", ".jsx", ".es", "es6"]` by default, providing custom extensions will override the default.
 + `suppressResolveWarning`: Boolean, `false` by default. During path resolution plugin shows a warning when it can't find a module. It will still do its best to resolve to the right path. This option suppresses that warning.
 
 #### matchPattern
