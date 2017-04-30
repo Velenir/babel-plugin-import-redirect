@@ -36,7 +36,7 @@ export default function (basedir, filename, extensions) {
 				resolved = "/node_modules/" + filename;
 			}
 			
-			console.error(errMessage);
+			console.warn(errMessage);
 			return resolved;
 		}
 	}
