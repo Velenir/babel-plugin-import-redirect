@@ -26,8 +26,8 @@ const replaceImport = (t, replacementObj, pathToReplace) => {
 		firstDeclaration ?
 			props.length ?
 				[firstDeclaration, t.variableDeclarator(t.objectPattern(props, null), firstIdentifier)] : [firstDeclaration] :
-		props.length ?
-			[t.variableDeclarator(t.objectPattern(props), replacementObj)] : [];
+			props.length ?
+				[t.variableDeclarator(t.objectPattern(props), replacementObj)] : [];
 	
 	const variableDeclaration = t.variableDeclaration("const", declarations);
 	
