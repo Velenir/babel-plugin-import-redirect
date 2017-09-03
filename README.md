@@ -40,7 +40,7 @@ Then add it to your babel configuration (e.g. in *.babelrc*). A rather exhaustiv
     {
       "root": "./tests/mocks",
       "extraFunctions": ["custom_require_function", "SystemJS.import"],
-			"promisifyReplacementFor": "SystemJS.import",
+      "promisifyReplacementFor": "SystemJS.import",
       "redirect": {
         "connect": "./connect.mocked",
         "path/to/(\\w+)\\.js$": "./$1.mocked",
@@ -119,9 +119,9 @@ const {MY_GLOBAL_1, MY_GLOBAL_2} = {"MY_GLOBAL_1": true, "MY_GLOBAL_2": 42};
 The transpilation to make it happen will be performed as follows:
 
 1. **import "./style.css";**``
-    1.1. `./style.css` path is resolved to `project/src/style.css` absolute path
-    1.2. `project/src/style.css` is matched against `new RegExp("\\.css$")`
-    1.3. the corresponding value of false triggers removal of the import declaration
+    1. `./style.css` path is resolved to `project/src/style.css` absolute path
+    1. `project/src/style.css` is matched against `new RegExp("\\.css$")`
+    1. the corresponding value of false triggers removal of the import declaration
 > removed
 
 2. **import connect from "connect";**
@@ -221,7 +221,7 @@ import {lib} from "pat/to/file";
 + An `Object`, which will result in removal of simple `import` declarations, `require()`, `import()` and custom require function calls without side effects (same as for `false`) and in replacement of default, named, namespace `import`s, `require()`, `import()` and custom require function calls with these objects. This `Object` must be JSON-serialazable.
 Additionally **replacement** objects for `import()` calls and calls of custom functions from `promisifyReplacementFor` will be wrapped in `Promise.resolve()`.
 
-E.g. for a `"path/to/file": {"key": val}` **matchPattern-replacement** pair
+E.g. for a `"path/to/file": {"key": val}` **matchPattern - replacement** pair
 
 | will be removed                                          | was removed
 |:---------------------------------------------------------|:-|
@@ -232,7 +232,7 @@ E.g. for a `"path/to/file": {"key": val}` **matchPattern-replacement** pair
 | `const lib = require("path/to/file");`                   | `const lib = {"key": val};`
 | `require("path/to/file").prop; `                         | `({"key": val}).prop;`
 | `fn(require("path/to/file"));`                           | `fn({"key": val});`
-| `import("path/to/file").then(module => module.default);` | `Promise.resolve({"key": val}).them(module => module.default);`
+| `import("path/to/file").then(module => module.default);` | `Promise.resolve({"key": val}).then(module => module.default);`
 | `import lib from "pat/to/file";`                         | `const {default: lib} = {"key": val};`
 | `import * as lib from "pat/to/file";`                    | `const lib = {"key": val};`
 | `import {lib} from "pat/to/file";`                       | `const {lib} = {"key": val};`
