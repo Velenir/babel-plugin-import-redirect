@@ -10,10 +10,10 @@ export default ({types: t}) => {
 		pre(state) {
 			const opts = this.opts;
 			if(!opts.root) opts.root = process.cwd();
-			
+
 			const filenameUnknown = state.opts.filename === "unknown";
 			const basedir = filenameUnknown ? opts.root : dirname(state.opts.filename);
-			if(filenameUnknown) {
+			if(filenameUnknown && !opts.suppressResolveWarning) {
 				console.warn("Source input isn't a file. Paths will be resolved relative to", opts.root);
 			}
 			
