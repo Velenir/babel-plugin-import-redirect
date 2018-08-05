@@ -49,7 +49,7 @@
     "eslint-plugin-import": "^2.6.0",
     "eslint-plugin-jest": "21.18.0",
     "jest": "^19.0.2",
-    "semantic-release": "15.9.2"
+    "semantic-release": "15.9.5"
   },
   "engines": {
     "node": ">=4"
