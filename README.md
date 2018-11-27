@@ -83,7 +83,7 @@ with *index.js* of
 ```
 import "./style.css";
 import connect from "connect";
-export {default as libFunction} from "./helpers/lib";
+export {default as libFunction} from "./libs/lib";
 import {MY_GLOBAL_1, MY_GLOBAL_2} from "./helpers/globals";
 // ...
 ```
@@ -131,8 +131,8 @@ The transpilation to make it happen will be performed as follows:
     4. the path is changed to `../tests/mocks/connect.mocked`
 > replaced with `import connect from "../tests/mocks/connect.mocked";`
 
-3. **import libFunction from "./helpers/lib";**
-    1. `./helpers/lib` path is resolved to `project/node_modules/helpers/lib.js` absolute path
+3. **import libFunction from "./libs/lib";**
+    1. `./libs/lib` path is resolved to `project/libs/lib.js` absolute path
     2. the path matches against `new RegExp("/libs/(\\w+)\\.js$")`
     3. as the redirect value contains a replacement group (`$1`), it is converted to `./tests/mocks/lib.mocked`
     4. the redirected path of `./tests/mocks/lib.mocked` is resolved relative to `index.js` as  `../tests/mocks/lib.mocked`
